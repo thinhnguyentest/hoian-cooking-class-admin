@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@theme {
+  /* Heritage Luxe Palette */
+  --color-primary: #8D5B3A;        /* Rich Brown */
+  --color-secondary: #5D4037;      /* Deep Mocha */
+  --color-accent: #C68642;         /* Terracotta */
+  --color-gold: #D4A017;           /* Hoi An Yellow */
+  --color-teal: #1A3C40;           /* Deep Forest Teal */
+  --color-sage: #EDE9D5;           /* Light Sage */
+  --color-cream: #FDF5E6;          /* Old Paper */
+  --color-cream-dark: #F5E9DA;     /* Aged Stone */
+  
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Plus Jakarta Sans", "Inter", sans-serif;
+
+  /* Custom Transitions */
+  --transition-heritage: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:root {
+  background-color: #F9F7F2;
+  color: #5D4037;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  letter-spacing: -0.011em;
+}
+
+/* Premium Interaction Layer */
+.hover-lift {
+  @apply transition-all duration-300;
+  transition-timing-function: var(--transition-heritage);
+}
+.hover-lift:hover {
+  @apply -translate-y-1 shadow-xl shadow-secondary/5 border-primary/20;
+}
+
+.heritage-border {
+  @apply border border-cream-dark/60 hover:border-primary/20 transition-colors;
+}
+
+.glass-panel {
+  @apply bg-white/70 backdrop-blur-md border border-white/40;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Lantern Glow Effects */
+.lantern-glow-yellow {
+  box-shadow: 0 10px 40px -10px rgba(212, 160, 23, 0.4);
+}
+
+.lantern-glow-teal {
+  box-shadow: 0 10px 40px -10px rgba(26, 60, 64, 0.2);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #8D5B3A20;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #8D5B3A50;
+}
+
