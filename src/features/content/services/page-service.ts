@@ -207,7 +207,16 @@ const MOCK_PAGES: Page[] = [
   }
 ];
 
-const IS_MOCK = import.meta.env.VITE_IS_MOCK_DATA !== 'false'; 
+const IS_MOCK = import.meta.env.VITE_IS_MOCK_DATA !== 'false';
+
+// Helpful console check for developers
+if (typeof window !== 'undefined') {
+  if (IS_MOCK) {
+    console.warn('%c--- ADMIN MODE: MOCK DATA ENABLED ---', 'background: #fdf6e3; color: #b58900; font-weight: bold; padding: 4px; border-radius: 4px;');
+  } else {
+    console.info('%c--- ADMIN MODE: LIVE API CONNECTED ---', 'background: #e6fffa; color: #234e52; font-weight: bold; padding: 4px; border-radius: 4px;');
+  }
+}
 
 export const pageService = {
   getAll: async (params?: { title?: string; slug?: string; pageTypeId?: number; page?: number; size?: number }): Promise<PaginatedResponse<Page>> => {
