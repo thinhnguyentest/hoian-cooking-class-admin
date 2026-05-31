@@ -8,12 +8,13 @@ import { Plus, Search, Edit3, Trash2, Check, X,
   Image as ImageIcon, Upload, CheckCircle2
 } from 'lucide-react'
 import { toast } from 'sonner'
-import { pageService, Page, PageContent, Menu, ImageAsset } from './services/page-service'
+import { pageService, Page, PageContent, Menu, ImageAsset, PageType } from './services/page-service'
 import { mediaService, ImageResponse } from '../media/services/media-service'
 import { cn } from '@/layouts/AdminLayout'
 
 const ContentManager = () => {
   const [pages, setPages] = useState<Page[]>([])
+  const [pageTypes, setPageTypes] = useState<PageType[]>([])
   const [loading, setLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const [editingPage, setEditingPage] = useState<Page | null>(null)
@@ -29,7 +30,17 @@ const ContentManager = () => {
 
   useEffect(() => {
     fetchPages()
+    fetchPageTypes()
   }, [])
+
+  const fetchPageTypes = async () => {
+    try {
+      const response = await pageService.getPageTypes()
+      setPageTypes(response.data)
+    } catch (error) {
+      console.error('Failed to fetch page types:', error)
+    }
+  }
 
   const fetchPages = async () => {
     try {
@@ -111,9 +122,20 @@ const ContentManager = () => {
     if (!editingPage) return
     try {
       setIsSaving(true)
+      
+      const selectedType = pageTypes.find(t => t.id === Number(editingPage.pageTypeId))
+      if (selectedType) {
+        await pageService.updatePageType(selectedType.id, selectedType.name, selectedType.code)
+      }
+
       await pageService.update(editingPage.id, editingPage)
       
-      setPages(prev => prev.map(p => p.id === editingPage.id ? editingPage : p))
+      const updatedPage = {
+        ...editingPage,
+        pageTypeName: selectedType ? selectedType.name : editingPage.pageTypeName
+      }
+      
+      setPages(prev => prev.map(p => p.id === editingPage.id ? updatedPage : p))
       
       setTimeout(() => {
         setIsSaving(false)
@@ -370,27 +392,77 @@ const ContentManager = () => {
                        </div>
                        
                        <div className="space-y-8">
-                          <div className="space-y-3">
-                             <label className="text-[11px] font-black text-primary/60 uppercase tracking-[0.3em] ml-1">Hero Display Title</label>
-                             <input 
-                               type="text" 
-                               className="w-full bg-cream/20 border-2 border-cream-dark/50 rounded-2xl px-6 py-5 text-lg focus:ring-0 focus:border-primary outline-none transition-all font-black text-secondary shadow-inner placeholder:text-secondary/10"
-                               value={editingPage.title}
-                               onChange={(e) => setEditingPage({...editingPage, title: e.target.value})}
-                             />
-                          </div>
-                          
-                          <div className="space-y-3">
-                             <label className="text-[11px] font-black text-primary/60 uppercase tracking-[0.3em] ml-1">Meta Description (SEO Intro)</label>
-                             <textarea 
-                               rows={5}
-                               className="w-full bg-cream/20 border-2 border-cream-dark/50 rounded-3xl px-6 py-6 text-sm focus:ring-0 focus:border-primary outline-none transition-all font-medium text-secondary/80 leading-relaxed resize-none shadow-inner"
-                               value={editingPage.description || ''}
-                               onChange={(e) => setEditingPage({...editingPage, description: e.target.value})}
-                               placeholder="Write a clear, enticing summary for this experience..."
-                             />
-                          </div>
-                       </div>
+                           <div className="space-y-3">
+                              <label className="text-[11px] font-black text-primary/60 uppercase tracking-[0.3em] ml-1">Hero Display Title</label>
+                              <input 
+                                type="text" 
+                                className="w-full bg-cream/20 border-2 border-cream-dark/50 rounded-2xl px-6 py-5 text-lg focus:ring-0 focus:border-primary outline-none transition-all font-black text-secondary shadow-inner placeholder:text-secondary/10"
+                                value={editingPage.title}
+                                onChange={(e) => setEditingPage({...editingPage, title: e.target.value})}
+                              />
+                           </div>
+
+                           <div className="space-y-3">
+                              <label className="text-[11px] font-black text-primary/60 uppercase tracking-[0.3em] ml-1">Category Name (Tên Phân loại / Page Type)</label>
+                              <input 
+                                type="text" 
+                                className="w-full bg-cream/20 border-2 border-cream-dark/50 rounded-2xl px-6 py-4 text-sm focus:ring-0 focus:border-primary outline-none transition-all font-black text-secondary shadow-inner placeholder:text-secondary/10"
+                                value={pageTypes.find(t => t.id === Number(editingPage.pageTypeId))?.name || ''}
+                                onChange={(e) => {
+                                  const newName = e.target.value
+                                  setPageTypes(prev => prev.map(t => t.id === Number(editingPage.pageTypeId) ? { ...t, name: newName } : t))
+                                }}
+                                placeholder="e.g. Cooking Class"
+                              />
+                           </div>
+                           
+                           <div className="space-y-3">
+                              <label className="text-[11px] font-black text-primary/60 uppercase tracking-[0.3em] ml-1">Meta Description (SEO Intro)</label>
+                              <textarea 
+                                rows={5}
+                                className="w-full bg-cream/20 border-2 border-cream-dark/50 rounded-3xl px-6 py-6 text-sm focus:ring-0 focus:border-primary outline-none transition-all font-medium text-secondary/80 leading-relaxed resize-none shadow-inner"
+                                value={editingPage.description || ''}
+                                onChange={(e) => setEditingPage({...editingPage, description: e.target.value})}
+                                placeholder="Write a clear, enticing summary for this experience..."
+                              />
+                           </div>
+
+                           <div className="border-t border-cream-dark/50 pt-8 space-y-6">
+                              <h5 className="font-serif font-black text-xl text-secondary">Key Details (Thông tin chi tiết)</h5>
+                              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                 <div className="space-y-3">
+                                    <label className="text-[11px] font-black text-primary/60 uppercase tracking-[0.3em] ml-1">Duration</label>
+                                    <input 
+                                      type="text" 
+                                      className="w-full bg-cream/20 border-2 border-cream-dark/50 rounded-2xl px-6 py-4 text-sm focus:ring-0 focus:border-primary outline-none transition-all font-medium text-secondary shadow-inner placeholder:text-secondary/10"
+                                      value={editingPage.duration || ''}
+                                      onChange={(e) => setEditingPage({...editingPage, duration: e.target.value})}
+                                      placeholder="e.g. 2.5 hours"
+                                    />
+                                 </div>
+                                 <div className="space-y-3">
+                                    <label className="text-[11px] font-black text-primary/60 uppercase tracking-[0.3em] ml-1">Group Size</label>
+                                    <input 
+                                      type="text" 
+                                      className="w-full bg-cream/20 border-2 border-cream-dark/50 rounded-2xl px-6 py-4 text-sm focus:ring-0 focus:border-primary outline-none transition-all font-medium text-secondary shadow-inner placeholder:text-secondary/10"
+                                      value={editingPage.groupSize || ''}
+                                      onChange={(e) => setEditingPage({...editingPage, groupSize: e.target.value})}
+                                      placeholder="e.g. Max 8 participants"
+                                    />
+                                 </div>
+                                 <div className="space-y-3">
+                                    <label className="text-[11px] font-black text-primary/60 uppercase tracking-[0.3em] ml-1">Cancellation</label>
+                                    <input 
+                                      type="text" 
+                                      className="w-full bg-cream/20 border-2 border-cream-dark/50 rounded-2xl px-6 py-4 text-sm focus:ring-0 focus:border-primary outline-none transition-all font-medium text-secondary shadow-inner placeholder:text-secondary/10"
+                                      value={editingPage.cancellation || ''}
+                                      onChange={(e) => setEditingPage({...editingPage, cancellation: e.target.value})}
+                                      placeholder="e.g. Free up to 24h before"
+                                    />
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
                     </div>
                   </motion.div>
                 )}

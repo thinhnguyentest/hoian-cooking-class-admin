@@ -25,6 +25,13 @@ export interface ImageAsset {
   altText?: string;
 }
 
+export interface PageType {
+  id: number;
+  name: string;
+  code: string;
+  description?: string;
+}
+
 export interface Page {
   id: number;
   pageTypeId: number;
@@ -32,6 +39,9 @@ export interface Page {
   title: string;
   description: string;
   slug: string;
+  duration?: string;
+  groupSize?: string;
+  cancellation?: string;
   contents: PageContent[];
   menus: Menu[];
   images: ImageAsset[];
@@ -62,6 +72,9 @@ const MOCK_PAGES: Page[] = [
     title: 'The Art of Vietnamese Flavor',
     description: 'A culinary journey through the heart of Hoi An, discovering the balance of texture, aroma, and taste.',
     slug: '/',
+    duration: '3 hours',
+    groupSize: 'Max 8 participants',
+    cancellation: 'Free up to 24h before',
     contents: [
       { id: 1, sectionType: 'INTRODUCTION', title: 'Our Story', content: 'Take a break from the busy streets of Hoi An and enjoy a peaceful 3-hour cooking class in a quiet countryside area, surrounded by rice fields and fresh air. This experience is hosted by Lily and her sister, who will guide you step by step in a warm, relaxed, and personal way.', sortOrder: 1 },
       { id: 101, sectionType: 'EXPERIENCE', title: 'Authentic Connection', content: 'After being picked up at the meeting point, you’ll travel to a calm rural location outside the city. Here, you can slow down, enjoy the green rice field views, and experience a simpler, more authentic side of local life.', sortOrder: 2 },
@@ -95,6 +108,9 @@ const MOCK_PAGES: Page[] = [
     title: 'Authentic Hoi An Street Food Tour',
     description: 'Journey through hidden alleyways and savor the unique flavors that define our ancient town’s culinary heritage.',
     slug: '/food-tour',
+    duration: '2.5 hours',
+    groupSize: 'Max 8 participants',
+    cancellation: 'Free up to 24h before',
     contents: [
       { id: 2, sectionType: 'INTRODUCTION', title: 'Journey Description', content: 'Journey through hidden alleyways and savor the unique flavors that define our ancient town’s culinary heritage.', sortOrder: 1 },
       { id: 201, sectionType: 'OTHER', title: 'Full Description', content: 'Hoi An is more than just an ancient town with its charming yellow heritage houses – it\'s a vibrant crossroads where Vietnamese, Chinese, and Japanese culinary traditions have merged over centuries, creating distinctive flavors found nowhere else in the world.', sortOrder: 2 }
@@ -136,6 +152,9 @@ const MOCK_PAGES: Page[] = [
     title: 'Making Lantern',
     description: 'Craft your own traditional silk lantern with local artisans.',
     slug: '/making-lantern',
+    duration: '2.5 hours',
+    groupSize: 'Max 15 participants',
+    cancellation: 'Free up to 24h before',
     contents: [
       { id: 3, sectionType: 'INTRODUCTION', title: 'Lantern Art', content: 'Create your own beautiful Hoi An silk lantern in our traditional craft workshop. Learn from local artisans and take home a piece of Vietnamese heritage.', sortOrder: 1 },
       { id: 301, sectionType: 'EXPERIENCE', title: 'Immersive Crafting', content: 'In this engaging workshop, we invite you to immerse yourself in the art of lantern making. Under the guidance of skilled craftsmen, you will learn how to bend bamboo, apply vibrant silk, and complete your very own traditional lantern.', sortOrder: 2 }
@@ -174,6 +193,9 @@ const MOCK_PAGES: Page[] = [
     title: 'Making Coffee',
     description: 'Master the art of traditional Vietnamese coffee making in the heart of Hoi An.',
     slug: '/making-coffee-class',
+    duration: '2 hours',
+    groupSize: 'Max 10 participants',
+    cancellation: 'Free up to 24h before',
     contents: [
       { id: 4, sectionType: 'INTRODUCTION', title: 'Coffee Workshop', content: 'Learn to make authentic Vietnamese egg coffee, coconut coffee, and salt coffee in our hands-on workshop in Hoi An. Discover the secrets of the Phin filter.', sortOrder: 1 },
       { id: 401, sectionType: 'OTHER', title: 'The Art of Coffee', content: 'Vietnam boasts one of the most unique coffee cultures in the world. From the robust beans grown in the Central Highlands to the creative ways we mix ingredients, coffee here is an art form.', sortOrder: 2 }
@@ -219,6 +241,38 @@ if (typeof window !== 'undefined') {
 }
 
 export const pageService = {
+  getPageTypes: async (): Promise<ApiResponse<PageType[]>> => {
+    if (IS_MOCK) {
+      return {
+        success: true,
+        message: 'Success',
+        data: [
+          { id: 1, name: 'Cooking Class', code: 'COOKING_CLASS' },
+          { id: 2, name: 'Food Tour', code: 'FOOD_TOUR' },
+          { id: 3, name: 'Making Lantern', code: 'MAKING_LANTERN' },
+          { id: 4, name: 'Making Coffee', code: 'MAKING_COFFEE' }
+        ],
+        timestamp: new Date().toISOString()
+      };
+    }
+    const response = await apiFetch<ApiResponse<{ content: PageType[] }>>('/page-types');
+    return {
+      ...response,
+      data: response.data.content
+    };
+  },
+
+  updatePageType: async (id: number, name: string, code: string): Promise<any> => {
+    if (IS_MOCK) {
+      return { id, name, code };
+    }
+    const response = await apiFetch<ApiResponse<any>>(`/page-types/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify({ name, code }),
+    });
+    return response.data;
+  },
+
   getAll: async (params?: { title?: string; slug?: string; pageTypeId?: number; page?: number; size?: number }): Promise<PaginatedResponse<Page>> => {
     if (IS_MOCK) {
        // Simulate filtering
