@@ -429,7 +429,7 @@ const ContentManager = () => {
 
                            <div className="border-t border-cream-dark/50 pt-8 space-y-6">
                               <h5 className="font-serif font-black text-xl text-secondary">Key Details (Thông tin chi tiết)</h5>
-                              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                                  <div className="space-y-3">
                                     <label className="text-[11px] font-black text-primary/60 uppercase tracking-[0.3em] ml-1">Duration</label>
                                     <input 
@@ -458,6 +458,17 @@ const ContentManager = () => {
                                       value={editingPage.cancellation || ''}
                                       onChange={(e) => setEditingPage({...editingPage, cancellation: e.target.value})}
                                       placeholder="e.g. Free up to 24h before"
+                                    />
+                                 </div>
+                                 <div className="space-y-3">
+                                    <label className="text-[11px] font-black text-primary/60 uppercase tracking-[0.3em] ml-1">Price (USD)</label>
+                                    <input 
+                                      type="number" 
+                                      step="0.01"
+                                      className="w-full bg-cream/20 border-2 border-cream-dark/50 rounded-2xl px-6 py-4 text-sm focus:ring-0 focus:border-primary outline-none transition-all font-medium text-secondary shadow-inner placeholder:text-secondary/10"
+                                      value={editingPage.price !== undefined ? editingPage.price : ''}
+                                      onChange={(e) => setEditingPage({...editingPage, price: e.target.value === '' ? undefined : Number(e.target.value)})}
+                                      placeholder="e.g. 38"
                                     />
                                  </div>
                               </div>

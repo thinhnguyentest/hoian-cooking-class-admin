@@ -77,3 +77,9 @@ body {
   background: #8D5B3A50;
 }
 
+/* Caret/Text Insertion Cursor Color Customization */
+input, textarea, select, [contenteditable] {
+  caret-color: var(--color-primary);
+}
+
+
