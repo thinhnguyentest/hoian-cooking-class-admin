@@ -39,7 +39,7 @@ const MediaManager = () => {
   const [isUploadOpen, setIsUploadOpen] = useState(false)
   const [uploading, setUploading] = useState(false)
   const [uploadForm, setUploadForm] = useState({
-    file: null as File | null,
+    files: [] as File[],
     pageId: '',
     sourceType: 'MEDIA',
     altText: ''
@@ -85,32 +85,50 @@ const MediaManager = () => {
 
   const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!uploadForm.file || !uploadForm.pageId) {
-      toast.error('Please select a file and a target page')
+    if (uploadForm.files.length === 0 || !uploadForm.pageId) {
+      toast.error('Please select at least one file and a target page')
       return
     }
 
     try {
       setUploading(true)
+      let successCount = 0
+      let failCount = 0
       
-      // Step 1: Upload to Cloudinary
-      const uploadResult = await mediaService.upload(uploadForm.file)
-      
-      // Step 2: Link to Page
-      const newImage = await mediaService.linkToPage(Number(uploadForm.pageId), {
-        url: uploadResult.url,
-        publicId: uploadResult.public_id,
-        sourceType: uploadForm.sourceType,
-        altText: uploadForm.altText
-      })
+      for (const file of uploadForm.files) {
+        try {
+          // Step 1: Upload to Cloudinary
+          const uploadResult = await mediaService.upload(file)
+          
+          // Step 2: Link to Page
+          const newImage = await mediaService.linkToPage(Number(uploadForm.pageId), {
+            url: uploadResult.url,
+            publicId: uploadResult.public_id,
+            sourceType: uploadForm.sourceType,
+            altText: uploadForm.altText || file.name.split('.')[0]
+          })
+          
+          setImages(prev => [newImage, ...prev])
+          successCount++
+        } catch (error) {
+          console.error('Upload failed for file:', file.name, error)
+          failCount++
+        }
+      }
 
-      setImages(prev => [newImage, ...prev])
       setIsUploadOpen(false)
-      setUploadForm({ file: null, pageId: '', sourceType: 'MEDIA', altText: '' })
-      toast.success('Asset uploaded and linked successfully!')
+      setUploadForm({ files: [], pageId: '', sourceType: 'MEDIA', altText: '' })
+      
+      if (successCount > 0 && failCount === 0) {
+        toast.success(`Successfully uploaded ${successCount} asset(s)`)
+      } else if (successCount > 0 && failCount > 0) {
+        toast.warning(`Uploaded ${successCount} asset(s), but ${failCount} failed`)
+      } else if (failCount > 0) {
+        toast.error('Upload failed. Please check your connection or file size.')
+      }
     } catch (error) {
-      console.error('Upload failed:', error)
-      toast.error('Upload failed. Please check your connection or file size.')
+      console.error('Upload error:', error)
+      toast.error('Upload failed')
     } finally {
       setUploading(false)
     }
@@ -329,23 +347,26 @@ const MediaManager = () => {
                   <div 
                     onClick={() => fileInputRef.current?.click()}
                     className={`relative border-2 border-dashed rounded-[2.5rem] p-12 text-center transition-all cursor-pointer group
-                      ${uploadForm.file ? 'border-primary bg-primary/5' : 'border-cream-dark hover:border-primary hover:bg-cream/30'}`}
+                      ${uploadForm.files.length > 0 ? 'border-primary bg-primary/5' : 'border-cream-dark hover:border-primary hover:bg-cream/30'}`}
                   >
                     <input 
                       type="file" 
                       ref={fileInputRef}
                       className="hidden" 
                       accept="image/*"
-                      onChange={(e) => setUploadForm({...uploadForm, file: e.target.files?.[0] || null})}
+                      multiple
+                      onChange={(e) => setUploadForm({...uploadForm, files: e.target.files ? Array.from(e.target.files) : []})}
                     />
                     <div className="space-y-4">
-                      {uploadForm.file ? (
+                      {uploadForm.files.length > 0 ? (
                         <>
                           <div className="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center mx-auto shadow-xl shadow-primary/20">
                              <CheckCircle2 size={32} />
                           </div>
                           <div>
-                             <p className="text-sm font-black text-secondary">{uploadForm.file.name}</p>
+                             <p className="text-sm font-black text-secondary">
+                               {uploadForm.files.length === 1 ? uploadForm.files[0].name : `${uploadForm.files.length} files selected`}
+                             </p>
                              <p className="text-[10px] text-primary font-black uppercase tracking-widest mt-1">Ready for preservation</p>
                           </div>
                         </>
@@ -403,7 +424,7 @@ const MediaManager = () => {
                     <button 
                       type="button"
                       onClick={() => setIsUploadOpen(false)}
-                      className="flex-1 py-4 font-black text-[11px] tracking-widest text-secondary/30 hover:text-secondary hover:bg-cream/50 rounded-2xl transition-all"
+                      className="flex-1 py-4 font-black text-[11px] tracking-widest text-secondary/30 hover:text-secondary hover:bg-cream/50 rounded-2xl transition-all cursor-pointer disabled:cursor-not-allowed"
                       disabled={uploading}
                     >
                       CANCEL
@@ -411,7 +432,7 @@ const MediaManager = () => {
                     <button 
                       type="submit"
                       disabled={uploading}
-                      className="flex-[2] py-4 bg-secondary text-white font-black text-[11px] tracking-[0.2em] rounded-2xl flex items-center justify-center space-x-3 hover:bg-primary shadow-xl shadow-secondary/20 disabled:opacity-50 transition-all"
+                      className="flex-[2] py-4 bg-secondary text-white font-black text-[11px] tracking-[0.2em] rounded-2xl flex items-center justify-center space-x-3 hover:bg-primary shadow-xl shadow-secondary/20 disabled:opacity-50 transition-all cursor-pointer disabled:cursor-not-allowed"
                     >
                       {uploading ? (
                         <>

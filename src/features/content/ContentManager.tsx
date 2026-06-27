@@ -84,23 +84,43 @@ const ContentManager = () => {
     }
   }
 
-  const handleMediaUpload = async (file: File) => {
-    if (!editingPage) return
+  const handleMediaUpload = async (files: FileList | File[]) => {
+    if (!editingPage || files.length === 0) return
     try {
       setIsUploadingMedia(true)
-      const uploadResult = await mediaService.upload(file)
-      const newImage = await mediaService.linkToPage(editingPage.id, {
-        url: uploadResult.url,
-        publicId: uploadResult.public_id,
-        sourceType: mediaUploadForm.sourceType,
-        altText: mediaUploadForm.altText
-      })
-      setPageImages(prev => [newImage, ...prev])
-      toast.success('Image uploaded and added to page')
+      let successCount = 0
+      let failCount = 0
+      
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i]
+        try {
+          const uploadResult = await mediaService.upload(file)
+          const newImage = await mediaService.linkToPage(editingPage.id, {
+            url: uploadResult.url,
+            publicId: uploadResult.public_id,
+            sourceType: mediaUploadForm.sourceType,
+            altText: mediaUploadForm.altText || file.name.split('.')[0]
+          })
+          setPageImages(prev => [newImage, ...prev])
+          successCount++
+        } catch (error) {
+          console.error('Media upload failed for file:', file.name, error)
+          failCount++
+        }
+      }
+      
       setMediaUploadForm({ ...mediaUploadForm, altText: '' })
+      
+      if (successCount > 0 && failCount === 0) {
+        toast.success(`Successfully uploaded ${successCount} image(s)`)
+      } else if (successCount > 0 && failCount > 0) {
+        toast.warning(`Uploaded ${successCount} image(s), but ${failCount} failed`)
+      } else if (failCount > 0) {
+        toast.error('Failed to upload image(s)')
+      }
     } catch (error) {
-      console.error('Media upload failed:', error)
-      toast.error('Failed to upload image')
+      console.error('Media upload execution error:', error)
+      toast.error('Upload failed')
     } finally {
       setIsUploadingMedia(false)
     }
@@ -770,7 +790,8 @@ const ContentManager = () => {
                               id="quick-upload"
                               className="hidden" 
                               accept="image/*"
-                              onChange={(e) => e.target.files?.[0] && handleMediaUpload(e.target.files[0])}
+                              multiple
+                              onChange={(e) => e.target.files && e.target.files.length > 0 && handleMediaUpload(e.target.files)}
                             />
                             <label 
                               htmlFor="quick-upload"
