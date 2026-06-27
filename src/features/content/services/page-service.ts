@@ -285,10 +285,18 @@ export const pageService = {
        if (params?.title) filtered = filtered.filter(p => p.title.toLowerCase().includes(params.title!.toLowerCase()));
        if (params?.slug) filtered = filtered.filter(p => p.slug.includes(params.slug!));
 
+      // Apply default sorting
+      const slugOrder = ['/', '/food-tour', '/making-coffee-class', '/making-lantern'];
+      const sorted = [...filtered].sort((a, b) => {
+        const indexA = slugOrder.indexOf(a.slug);
+        const indexB = slugOrder.indexOf(b.slug);
+        return (indexA === -1 ? 999 : indexA) - (indexB === -1 ? 999 : indexB);
+      });
+
       return {
-        data: filtered,
+        data: sorted,
         metadata: {
-          totalRecords: filtered.length,
+          totalRecords: sorted.length,
           currentPage: 1,
           pageSize: 10,
           totalPages: 1
@@ -302,7 +310,25 @@ export const pageService = {
     if (params?.page) query.append('page', (params.page - 1).toString());
     if (params?.size) query.append('size', params.size.toString());
 
-    return apiFetch<PaginatedResponse<Page>>(`/pages?${query.toString()}`);
+    try {
+      const response = await apiFetch<PaginatedResponse<Page>>(`/pages?${query.toString()}`);
+      
+      // Apply default sorting
+      const slugOrder = ['/', '/food-tour', '/making-coffee-class', '/making-lantern'];
+      const sortedData = [...response.data].sort((a, b) => {
+        const indexA = slugOrder.indexOf(a.slug);
+        const indexB = slugOrder.indexOf(b.slug);
+        return (indexA === -1 ? 999 : indexA) - (indexB === -1 ? 999 : indexB);
+      });
+
+      return {
+        ...response,
+        data: sortedData
+      };
+    } catch (error) {
+      console.error('Failed to fetch pages in admin pageService:', error);
+      throw error;
+    }
   },
 
   getById: async (id: number): Promise<Page> => {
