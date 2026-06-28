@@ -90,6 +90,14 @@ const MediaManager = () => {
       return
     }
 
+    // Client-side file size check (10MB limit)
+    for (const file of uploadForm.files) {
+      if (file.size > 10 * 1024 * 1024) {
+        toast.error(`File "${file.name}" is too large. Maximum size allowed is 10MB.`)
+        return
+      }
+    }
+
     try {
       setUploading(true)
       let successCount = 0

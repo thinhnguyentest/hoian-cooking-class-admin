@@ -86,6 +86,15 @@ const ContentManager = () => {
 
   const handleMediaUpload = async (files: FileList | File[]) => {
     if (!editingPage || files.length === 0) return
+
+    // Client-side file size check (10MB limit)
+    for (let i = 0; i < files.length; i++) {
+      if (files[i].size > 10 * 1024 * 1024) {
+        toast.error(`File "${files[i].name}" is too large. Maximum size allowed is 10MB.`)
+        return
+      }
+    }
+
     try {
       setIsUploadingMedia(true)
       let successCount = 0
