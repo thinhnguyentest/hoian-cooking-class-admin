@@ -151,43 +151,43 @@ const MOCK_PAGES: Page[] = [
   {
     id: 3,
     pageTypeId: 3,
-    pageTypeName: 'Making Lantern',
-    title: 'Making Lantern',
-    description: 'Craft your own traditional silk lantern with local artisans.',
-    slug: '/making-lantern',
+    pageTypeName: 'Private Dinner',
+    title: 'Private Dinner',
+    description: 'Enjoy a private dinner experience in a quiet countryside area of Hoi An.',
+    slug: '/private-dinner',
     duration: '2.5 hours',
     groupSize: 'Max 15 participants',
     cancellation: 'Free up to 24h before',
     price: 28.00,
     contents: [
-      { id: 3, sectionType: 'INTRODUCTION', title: 'Lantern Art', content: 'Create your own beautiful Hoi An silk lantern in our traditional craft workshop. Learn from local artisans and take home a piece of Vietnamese heritage.', sortOrder: 1 },
-      { id: 301, sectionType: 'EXPERIENCE', title: 'Immersive Crafting', content: 'In this engaging workshop, we invite you to immerse yourself in the art of lantern making. Under the guidance of skilled craftsmen, you will learn how to bend bamboo, apply vibrant silk, and complete your very own traditional lantern.', sortOrder: 2 }
+      { id: 3, sectionType: 'INTRODUCTION', title: 'Private Dinner', content: 'Enjoy a private dinner experience in a quiet countryside area of Hoi An. Savor authentic local dishes prepared by our family chefs in a warm, relaxed setting.', sortOrder: 1 },
+      { id: 301, sectionType: 'EXPERIENCE', title: 'Authentic Dining', content: 'In this exclusive private dining experience, you will enjoy a curated menu of traditional Hoi An dishes prepared with fresh local ingredients. Take time to relax and connect over food in our peaceful countryside sanctuary.', sortOrder: 2 }
     ],
     menus: [
-      { id: 31, name: 'Lantern History', description: 'Learn about the significance of lanterns in Hoi An\'s heritage', sortOrder: 1 },
-      { id: 32, name: 'Selecting Materials', description: 'Choose your favorite bamboo frame shape and beautiful Vietnamese silk colors', sortOrder: 2 }
+      { id: 31, name: 'Welcome Drink & Appetizers', description: 'Fresh local herbal tea and traditional snacks', sortOrder: 1 },
+      { id: 32, name: 'Vietnamese Specialties Course', description: 'Curated traditional courses including local Cao Lau, Banh Xeo, and grilled skewers', sortOrder: 2 }
     ],
     images: [
-      { id: 35, sourceType: 'HERO', url: '/images/webp/lantern-making/lantern-class-hero.webp', altText: 'Traditional Hoi An lantern making workshop hero' },
-      { id: 36, sourceType: 'CAROUSEL', url: '/images/webp/lantern-making/lantern-class-main.webp', altText: 'Main view of lantern making class' },
-      { id: 37, sourceType: 'CAROUSEL', url: '/images/webp/lantern-making/stock-lantern-1.webp', altText: 'Vibrant silk lanterns variety' },
-      { id: 38, sourceType: 'CAROUSEL', url: '/images/webp/lantern-making/stock-lantern-2.webp', altText: 'Handmade bamboo frames for lanterns' },
-      { id: 39, sourceType: 'CAROUSEL', url: '/images/webp/lantern-making/stock-lantern-3.webp', altText: 'Artisan applying glue to lantern frame' },
-      { id: 40, sourceType: 'CAROUSEL', url: '/images/webp/lantern-making/stock-lantern-4.webp', altText: 'Student stretching silk over lantern' },
-      { id: 41, sourceType: 'CAROUSEL', url: '/images/webp/lantern-making/stock-lantern-5.webp', altText: 'Finished handmade lanterns glowing at night' },
-      { id: 42, sourceType: 'CONTENT', url: '/images/webp/lantern-making/stock-lantern-8.webp', altText: 'Close-up of lantern craftsmanship' },
-      { id: 43, sourceType: 'CONTENT', url: '/images/webp/lantern-making/stock-lantern-1.webp', altText: 'Workshop atmosphere with colorful lanterns' },
-      { id: 44, sourceType: 'CONTENT', url: '/images/webp/lantern-making/stock-lantern-2.webp', altText: 'Preparation of bamboo frames' },
-      { id: 45, sourceType: 'CONTENT', url: '/images/webp/lantern-making/stock-lantern-3.webp', altText: 'Detail of applying silk to frame' },
-      { id: 46, sourceType: 'CONTENT', url: '/images/webp/lantern-making/stock-lantern-4.webp', altText: 'Finishing touches on a silk lantern' },
-      { id: 69, sourceType: 'MEDIA', url: '/images/webp/lantern-making/stock-lantern-1.webp', altText: 'Colorful variety of Hoi An silk lanterns' },
-      { id: 70, sourceType: 'MEDIA', url: '/images/webp/lantern-making/stock-lantern-2.webp', altText: 'Bamboo frames for traditional lantern making' },
-      { id: 71, sourceType: 'MEDIA', url: '/images/webp/lantern-making/stock-lantern-3.webp', altText: 'Artisan applying glue to lantern bamboo frame' },
-      { id: 72, sourceType: 'MEDIA', url: '/images/webp/lantern-making/stock-lantern-4.webp', altText: 'Stretching vibrant yellow silk over lantern frame' },
-      { id: 73, sourceType: 'MEDIA', url: '/images/webp/lantern-making/stock-lantern-5.webp', altText: 'Finished handmade lanterns glowing at night' },
-      { id: 74, sourceType: 'MEDIA', url: '/images/webp/lantern-making/stock-lantern-6.webp', altText: 'Workshop participants crafting their lanterns' },
-      { id: 75, sourceType: 'MEDIA', url: '/images/webp/lantern-making/stock-lantern-7.webp', altText: 'Tassels and decorative elements for lanterns' },
-      { id: 76, sourceType: 'MEDIA', url: '/images/webp/lantern-making/stock-lantern-8.webp', altText: 'Intricate details of a completed Hoi An lantern' }
+      { id: 35, sourceType: 'HERO', url: '/images/webp/lantern-class-hero.webp', altText: 'Traditional Hoi An lantern making workshop hero' },
+      { id: 36, sourceType: 'CAROUSEL', url: '/images/webp/lantern-class-main.webp', altText: 'Main view of lantern making class' },
+      { id: 37, sourceType: 'CAROUSEL', url: '/images/webp/stock-lantern-1.webp', altText: 'Vibrant silk lanterns variety' },
+      { id: 38, sourceType: 'CAROUSEL', url: '/images/webp/stock-lantern-2.webp', altText: 'Handmade bamboo frames for lanterns' },
+      { id: 39, sourceType: 'CAROUSEL', url: '/images/webp/stock-lantern-3.webp', altText: 'Artisan applying glue to lantern frame' },
+      { id: 40, sourceType: 'CAROUSEL', url: '/images/webp/stock-lantern-4.webp', altText: 'Student stretching silk over lantern' },
+      { id: 41, sourceType: 'CAROUSEL', url: '/images/webp/stock-lantern-5.webp', altText: 'Finished handmade lanterns glowing at night' },
+      { id: 42, sourceType: 'CONTENT', url: '/images/webp/stock-lantern-8.webp', altText: 'Close-up of lantern craftsmanship' },
+      { id: 43, sourceType: 'CONTENT', url: '/images/webp/stock-lantern-1.webp', altText: 'Workshop atmosphere with colorful lanterns' },
+      { id: 44, sourceType: 'CONTENT', url: '/images/webp/stock-lantern-2.webp', altText: 'Preparation of bamboo frames' },
+      { id: 45, sourceType: 'CONTENT', url: '/images/webp/stock-lantern-3.webp', altText: 'Detail of applying silk to frame' },
+      { id: 46, sourceType: 'CONTENT', url: '/images/webp/stock-lantern-4.webp', altText: 'Finishing touches on a silk lantern' },
+      { id: 69, sourceType: 'MEDIA', url: '/images/webp/stock-lantern-1.webp', altText: 'Colorful variety of Hoi An silk lanterns' },
+      { id: 70, sourceType: 'MEDIA', url: '/images/webp/stock-lantern-2.webp', altText: 'Bamboo frames for traditional lantern making' },
+      { id: 71, sourceType: 'MEDIA', url: '/images/webp/stock-lantern-3.webp', altText: 'Artisan applying glue to lantern bamboo frame' },
+      { id: 72, sourceType: 'MEDIA', url: '/images/webp/stock-lantern-4.webp', altText: 'Stretching vibrant yellow silk over lantern frame' },
+      { id: 73, sourceType: 'MEDIA', url: '/images/webp/stock-lantern-5.webp', altText: 'Finished handmade lanterns glowing at night' },
+      { id: 74, sourceType: 'MEDIA', url: '/images/webp/stock-lantern-6.webp', altText: 'Workshop participants crafting their lanterns' },
+      { id: 75, sourceType: 'MEDIA', url: '/images/webp/stock-lantern-7.webp', altText: 'Tassels and decorative elements for lanterns' },
+      { id: 76, sourceType: 'MEDIA', url: '/images/webp/stock-lantern-8.webp', altText: 'Intricate details of a completed Hoi An lantern' }
     ]
   },
   {
@@ -210,26 +210,26 @@ const MOCK_PAGES: Page[] = [
       { id: 42, name: 'Hanoi Egg Coffee (Cà Phê Trứng)', description: 'A creamy, dessert-like coffee topped with whipped egg yolks and condensed milk', sortOrder: 2 }
     ],
     images: [
-      { id: 47, sourceType: 'HERO', url: '/images/webp/coffee-making/coffee-class-hero.webp', altText: 'Vietnamese coffee workshop hero image' },
-      { id: 48, sourceType: 'CAROUSEL', url: '/images/webp/coffee-making/coffee-class-main.webp', altText: 'Traditional coffee brewing process' },
-      { id: 49, sourceType: 'CAROUSEL', url: '/images/webp/coffee-making/stock-coffee-1.webp', altText: 'Freshly brewed Phin coffee' },
-      { id: 50, sourceType: 'CAROUSEL', url: '/images/webp/coffee-making/stock-coffee-2.webp', altText: 'Whisking egg yolks for coffee' },
-      { id: 51, sourceType: 'CAROUSEL', url: '/images/webp/coffee-making/stock-coffee-3.webp', altText: 'Coconut milk coffee preparation' },
-      { id: 52, sourceType: 'CAROUSEL', url: '/images/webp/coffee-making/stock-coffee-4.webp', altText: 'Salt coffee specialty' },
-      { id: 53, sourceType: 'CAROUSEL', url: '/images/webp/coffee-making/stock-coffee-5.webp', altText: 'Roasted coffee beans close-up' },
-      { id: 54, sourceType: 'CONTENT', url: '/images/webp/coffee-making/stock-coffee-9.webp', altText: 'Step-by-step coffee making guide' },
-      { id: 55, sourceType: 'CONTENT', url: '/images/webp/coffee-making/stock-coffee-1.webp', altText: 'Traditional coffee filter and cup' },
-      { id: 56, sourceType: 'CONTENT', url: '/images/webp/coffee-making/stock-coffee-2.webp', altText: 'Creamy egg coffee topping' },
-      { id: 57, sourceType: 'CONTENT', url: '/images/webp/coffee-making/stock-coffee-3.webp', altText: 'Refreshing iced coconut coffee' },
-      { id: 58, sourceType: 'CONTENT', url: '/images/webp/coffee-making/stock-coffee-4.webp', altText: 'Central Vietnam salt coffee experience' },
-      { id: 77, sourceType: 'MEDIA', url: '/images/webp/coffee-making/stock-coffee-1.webp', altText: 'Authentic Vietnamese Phin filter brewing coffee' },
-      { id: 78, sourceType: 'MEDIA', url: '/images/webp/coffee-making/stock-coffee-2.webp', altText: 'Fluffy whipped egg yolks for traditional Hanoi egg coffee' },
-      { id: 79, sourceType: 'MEDIA', url: '/images/webp/coffee-making/stock-coffee-3.webp', altText: 'Freshly prepared coconut coffee with condensed milk' },
-      { id: 80, sourceType: 'MEDIA', url: '/images/webp/coffee-making/stock-coffee-4.webp', altText: 'Savory salt coffee specialty from Central Vietnam' },
-      { id: 81, sourceType: 'MEDIA', url: '/images/webp/coffee-making/stock-coffee-5.webp', altText: 'Coffee beans from the Central Highlands of Vietnam' },
-      { id: 82, sourceType: 'MEDIA', url: '/images/webp/coffee-making/stock-coffee-6.webp', altText: 'Coffee workshop participants learning brewing techniques' },
-      { id: 83, sourceType: 'MEDIA', url: '/images/webp/coffee-making/stock-coffee-7.webp', altText: 'Traditional coffee set in a Hoi An cafe' },
-      { id: 84, sourceType: 'MEDIA', url: '/images/webp/coffee-making/stock-coffee-8.webp', altText: 'Close-up of coffee dripping through a stainless steel Phin' }
+      { id: 47, sourceType: 'HERO', url: '/images/webp/coffee-class-hero.webp', altText: 'Vietnamese coffee workshop hero image' },
+      { id: 48, sourceType: 'CAROUSEL', url: '/images/webp/coffee-class-main.webp', altText: 'Traditional coffee brewing process' },
+      { id: 49, sourceType: 'CAROUSEL', url: '/images/webp/stock-coffee-1.webp', altText: 'Freshly brewed Phin coffee' },
+      { id: 50, sourceType: 'CAROUSEL', url: '/images/webp/stock-coffee-2.webp', altText: 'Whisking egg yolks for coffee' },
+      { id: 51, sourceType: 'CAROUSEL', url: '/images/webp/stock-coffee-3.webp', altText: 'Coconut milk coffee preparation' },
+      { id: 52, sourceType: 'CAROUSEL', url: '/images/webp/stock-coffee-4.webp', altText: 'Salt coffee specialty' },
+      { id: 53, sourceType: 'CAROUSEL', url: '/images/webp/stock-coffee-5.webp', altText: 'Roasted coffee beans close-up' },
+      { id: 54, sourceType: 'CONTENT', url: '/images/webp/stock-coffee-9.webp', altText: 'Step-by-step coffee making guide' },
+      { id: 55, sourceType: 'CONTENT', url: '/images/webp/stock-coffee-1.webp', altText: 'Traditional coffee filter and cup' },
+      { id: 56, sourceType: 'CONTENT', url: '/images/webp/stock-coffee-2.webp', altText: 'Creamy egg coffee topping' },
+      { id: 57, sourceType: 'CONTENT', url: '/images/webp/stock-coffee-3.webp', altText: 'Refreshing iced coconut coffee' },
+      { id: 58, sourceType: 'CONTENT', url: '/images/webp/stock-coffee-4.webp', altText: 'Central Vietnam salt coffee experience' },
+      { id: 77, sourceType: 'MEDIA', url: '/images/webp/stock-coffee-1.webp', altText: 'Authentic Vietnamese Phin filter brewing coffee' },
+      { id: 78, sourceType: 'MEDIA', url: '/images/webp/stock-coffee-2.webp', altText: 'Fluffy whipped egg yolks for traditional Hanoi egg coffee' },
+      { id: 79, sourceType: 'MEDIA', url: '/images/webp/stock-coffee-3.webp', altText: 'Freshly prepared coconut coffee with condensed milk' },
+      { id: 80, sourceType: 'MEDIA', url: '/images/webp/stock-coffee-4.webp', altText: 'Savory salt coffee specialty from Central Vietnam' },
+      { id: 81, sourceType: 'MEDIA', url: '/images/webp/stock-coffee-5.webp', altText: 'Coffee beans from the Central Highlands of Vietnam' },
+      { id: 82, sourceType: 'MEDIA', url: '/images/webp/stock-coffee-6.webp', altText: 'Coffee workshop participants learning brewing techniques' },
+      { id: 83, sourceType: 'MEDIA', url: '/images/webp/stock-coffee-7.webp', altText: 'Traditional coffee set in a Hoi An cafe' },
+      { id: 84, sourceType: 'MEDIA', url: '/images/webp/stock-coffee-8.webp', altText: 'Close-up of coffee dripping through a stainless steel Phin' }
     ]
   }
 ];
@@ -286,7 +286,7 @@ export const pageService = {
        if (params?.slug) filtered = filtered.filter(p => p.slug.includes(params.slug!));
 
       // Apply default sorting
-      const slugOrder = ['/', '/food-tour', '/making-coffee-class', '/making-lantern'];
+      const slugOrder = ['/', '/food-tour', '/making-coffee-class', '/private-dinner'];
       const sorted = [...filtered].sort((a, b) => {
         const indexA = slugOrder.indexOf(a.slug);
         const indexB = slugOrder.indexOf(b.slug);
@@ -314,7 +314,7 @@ export const pageService = {
       const response = await apiFetch<PaginatedResponse<Page>>(`/pages?${query.toString()}`);
       
       // Apply default sorting
-      const slugOrder = ['/', '/food-tour', '/making-coffee-class', '/making-lantern'];
+      const slugOrder = ['/', '/food-tour', '/making-coffee-class', '/private-dinner'];
       const sortedData = [...response.data].sort((a, b) => {
         const indexA = slugOrder.indexOf(a.slug);
         const indexB = slugOrder.indexOf(b.slug);
