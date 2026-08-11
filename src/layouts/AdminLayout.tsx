@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Outlet, Link, useLocation } from 'react-router-dom'
 import { 
   LayoutDashboard, 
+  BarChart3,
   FileText, 
   Image as ImageIcon, 
   MessageSquare, 
@@ -23,6 +24,7 @@ export function cn(...inputs: ClassValue[]) {
 
 const MENU_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, path: '/' },
+  { id: 'analytics', label: 'Analytics', icon: BarChart3, path: '/analytics' },
   { id: 'content', label: 'CMS Content', icon: FileText, path: '/content' },
   { id: 'media', label: 'Media Manager', icon: ImageIcon, path: '/media' },
   { id: 'reviews', label: 'Reviews', icon: MessageSquare, path: '/reviews' },

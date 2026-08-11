@@ -4,6 +4,7 @@ import Dashboard from './features/dashboard/Dashboard'
 import ContentManager from './features/content/ContentManager'
 import MediaManager from './features/media/MediaManager'
 import ContactSettings from './features/settings/components/ContactSettings'
+import AnalyticsPage from './features/analytics/pages/AnalyticsPage'
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<AdminLayout />}>
           <Route index element={<Dashboard />} />
+          <Route path="analytics" element={<AnalyticsPage />} />
           <Route path="content" element={<ContentManager />} />
           <Route path="media" element={<MediaManager />} />
           <Route path="settings" element={<ContactSettings />} />
